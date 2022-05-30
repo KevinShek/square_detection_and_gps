@@ -5,8 +5,7 @@ from pathlib import Path
 import itertools
 from config import Settings
 from saving import Saving
-import detection
-import locating_gps
+from detection import detection
 
 """
 The following code contains the detection of the square target and saves only the inner square data
@@ -32,10 +31,11 @@ def solution(counter, marker, targetCoords, result_dir):
         filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
         filewriter.writerow([str(marker), str(lat), str(long)])
 
-    print("detection of marker", marker, "'s information is saved")
+    print("Detection of Target", marker, "is saved")
 
     counter = 1
-    marker += 1
+    if marker.isnumeric():
+        marker += 1
 
     return marker, counter
 
@@ -51,6 +51,7 @@ def capture_setting():
 
     # Connecting to the Pixhawk and gathering data
     if config.GPS:
+        import locating_gps
         print('Connecting to drone...')
 
         # Connect to vehicle and print some info
@@ -172,7 +173,7 @@ def capture_setting():
                 marker = Path(name).stem # grabs the name with the extension
 
                 # detecting the 2 square target and return the images and if it was successful or not
-                color, roi, frame, success = detection(frame, config)
+                color, roi, frame, _, success = detection(test_image, config)
                 
                 if success:
                     counter = counter + 1
@@ -182,14 +183,14 @@ def capture_setting():
                         name_of_results = ["color", "roi", "frame"]
                         image_results = [color, roi, frame]
                         for value, data in enumerate(name_of_results):
-                            image_name = f"{marker}_{data}_{counter}.jpg"
+                            image_name = f"{marker}_{data}.jpg"
                             image = image_results[value]
                             if image is not None:
                                 save.save_the_image(image_name, image)
                     
                     # storing the information onto a csv file
                     solution(counter, marker, targetCoords, save.save_dir)
-        print(f"there is a total image count of {len(image_count)}, frames appended {len(cap)} and the total detection of the square target is {detected}")
+        print(f"there is a total image count of {len(image_count)}, frames appended {len(cap)} and the total detection of the square target is {detected}.")
 
 
 def main():

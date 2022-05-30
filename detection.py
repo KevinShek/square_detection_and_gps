@@ -37,12 +37,12 @@ def detection(frame, config):
     # grabs the angle for rotation to make the square level
     angle = cv2.minAreaRect(approx)[-1]  # -1 is the angle the rectangle is at
 
-    if 0 == angle:
+    if angle == 0.0:
         angle = angle
-    elif -45 > angle > 90:
-        angle = -(90 + angle)
-    elif -45 > angle:
-        angle = 90 + angle
+    elif angle == 180 or angle == -180 or angle == 90 or angle == -90:
+        angle = 0.0
+    elif angle > 45:
+        angle = 90 - angle
     else:
         angle = angle
 
