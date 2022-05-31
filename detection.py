@@ -114,6 +114,6 @@ def locating_square(contours, edged_copy, config):
             solidity = area / float(hullArea)
             keepDims = w > 10 and h > 10
             keepSolidity = solidity > 0.9  # to check if it's near to be an area of a square
-            keepAspectRatio = 0.8 <= aspectRatio <= 1.2
+            keepAspectRatio = 0.9 <= aspectRatio <= 1.1
             if keepDims and keepSolidity and keepAspectRatio:  # checks if the values are true
                 return x, y, w, h, approx, c
