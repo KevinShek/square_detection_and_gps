@@ -80,7 +80,7 @@ def detection(frame, config):
         cv2.imshow("captured image", roi)
         cv2.waitKey(0)
 
-    return color, roi, frame, centre_target, True
+    return color, roi, frame, centre_target, edged_copy, True
 
 
 def edge_detection(frame, inner_switch, config):
