@@ -34,8 +34,6 @@ def solution(counter, marker, targetCoords, result_dir):
     print("Detection of Target", marker, "is saved")
 
     counter = 1
-    if marker.isnumeric():
-        marker += 1
 
     return marker, counter
 
@@ -84,7 +82,7 @@ def capture_setting():
                     break
 
             # grab the gps details
-            if Settings.GPS:
+            if config.GPS:
                 position = vehicle.location.global_relative_frame
                 positions = [position.lat, position.lon, position.alt]
                 heading = vehicle.heading
@@ -109,6 +107,7 @@ def capture_setting():
                 
                 # storing the information onto a csv file
                 solution(counter, marker, save.save_dir)
+                marker = marker + 1
 
 
     elif config.capture == "pi":
@@ -129,7 +128,7 @@ def capture_setting():
             frame = image.array
 
             # grab the gps details
-            if Settings.GPS:
+            if config.GPS:
                 position = vehicle.location.global_relative_frame
                 positions = [position.lat, position.lon, position.alt]
                 heading = vehicle.heading
@@ -154,6 +153,7 @@ def capture_setting():
 
                 # storing the information onto a csv file
                 solution(counter, marker, targetCoords, save.save_dir)
+                marker = marker + 1
 
             cap.truncate(0)
                 
