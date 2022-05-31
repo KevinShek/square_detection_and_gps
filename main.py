@@ -88,7 +88,7 @@ def capture_setting():
                 heading = vehicle.heading
 
             # detecting the 2 square target and return the images and if it was successful or not
-            color, roi, frame, centre_target, success = detection(frame, config)
+            color, roi, frame, centre_target, edge, success = detection(frame, config)
 
             # storing the information onto a csv file
             solution(counter, marker, targetCoords, save.save_dir)
@@ -97,8 +97,8 @@ def capture_setting():
                 counter = counter + 1
 
                 if config.save_results:
-                    name_of_results = ["color", "roi", "frame"]
-                    image_results = [color, roi, frame]
+                    name_of_results = ["color", "roi", "frame", "edge"]
+                    image_results = [color, roi, frame, edge]
                     for value, data in enumerate(name_of_results):
                         image_name = f"{marker}_{data}_{counter}.jpg"
                         image = image_results[value]
@@ -134,14 +134,14 @@ def capture_setting():
                 heading = vehicle.heading
 
             # detecting the 2 square target and return the images and if it was successful or not
-            color, roi, frame, centre_target, success = detection(frame, config)
+            color, roi, frame, centre_target, edge, success = detection(frame, config)
             
             if success:
                 counter = counter + 1
 
                 if config.save_results:
-                    name_of_results = ["color", "roi", "frame"]
-                    image_results = [color, roi, frame]
+                    name_of_results = ["color", "roi", "frame", "edge"]
+                    image_results = [color, roi, frame, edge]
                     for value, data in enumerate(name_of_results):
                         image_name = f"{marker}_{data}_{counter}.jpg"
                         image = image_results[value]
@@ -173,15 +173,15 @@ def capture_setting():
                 marker = Path(name).stem # grabs the name with the extension
 
                 # detecting the 2 square target and return the images and if it was successful or not
-                color, roi, frame, _, success = detection(test_image, config)
+                color, roi, frame, _, edge, success = detection(test_image, config)
                 
                 if success:
                     counter = counter + 1
                     detected = detected + 1
 
                     if config.save_results:
-                        name_of_results = ["color", "roi", "frame"]
-                        image_results = [color, roi, frame]
+                        name_of_results = ["color", "roi", "frame", "edge"]
+                        image_results = [color, roi, frame, edge]
                         for value, data in enumerate(name_of_results):
                             image_name = f"{marker}_{data}.jpg"
                             image = image_results[value]
