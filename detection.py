@@ -15,7 +15,7 @@ def detection(frame, config):
     try:
         x, y, w, h, approx, cnt = locating_square(contours, edged_copy, config)
     except TypeError:
-        return _, _, _, _, False
+        return _, _, _, _, _, False
 
     if config.Step_camera:
         rect = cv2.minAreaRect(cnt)
