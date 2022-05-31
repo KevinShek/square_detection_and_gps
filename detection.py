@@ -66,6 +66,15 @@ def detection(frame, config):
                             (0, 0, 255),  # green
                             3)
         cv2.imshow("frame block", new)
+        
+    frame = cv2.rectangle(frame,  # draw rectangle on original testing image
+                            (x, y),
+                            # upper left corner
+                            (x + w,
+                             y + h),
+                            # lower right corner
+                            (0, 0, 255),  # green
+                            3)
 
     if config.Step_detection:
         cv2.imshow("captured image", roi)
